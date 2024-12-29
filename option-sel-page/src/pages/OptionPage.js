@@ -18,16 +18,6 @@ import {
 
 import img46a_1 from "../assets/images/46a(1).jpg";
 import img46a_2 from "../assets/images/46a(2).jpg";
-import img46aartwall from "../assets/images/46a(artwall).jpg";
-import img46abedroom1 from "../assets/images/46a(bedroom1).jpg";
-import img46abedroom2 from "../assets/images/46a(bedroom2).jpg";
-import img46acdoor from "../assets/images/46a(cdoor).jpg";
-import img46agas from "../assets/images/46a(gas).jpg";
-import img46alight from "../assets/images/46a(light).jpg";
-import img46apannel from "../assets/images/46a(pannel).jpg";
-import img46arefreg from "../assets/images/46a(refreg).jpg";
-import img46asink from "../assets/images/46a(sink).jpg";
-import img46awashdish from "../assets/images/46a(washdish).jpg";
 import img46b_1 from "../assets/images/46b(1).jpg";
 import img46b_2 from "../assets/images/46b(2).jpg";
 import img55a_1 from "../assets/images/55a(1).jpg";
@@ -38,6 +28,13 @@ import img55c_1 from "../assets/images/55c(1).jpg";
 import img55c_2 from "../assets/images/55c(2).jpg";
 import img55d_1 from "../assets/images/55d(1).jpg";
 import img55d_2 from "../assets/images/55d(2).jpg";
+
+import img46aDetail from "../assets/images/46aDetail.jpg";
+import img46bDetail from "../assets/images/46bDetail.jpg";
+import img55aDetail from "../assets/images/55aDetail.jpg";
+import img55bDetail from "../assets/images/55bDetail.jpg";
+import img55cDetail from "../assets/images/55cDetail.jpg";
+import img55dDetail from "../assets/images/55dDetail.jpg";
 
 import A46Options from "../options/A46";
 import A46EOptions from "../options/A46E";
@@ -56,8 +53,113 @@ const OptionPage = ({ selectedType, selectedExpandable, goBack }) => {
   const [modalOpen, setModalOpen] = useState(false); // 모달 상태
   const [modalImage, setModalImage] = useState(""); // 모달에 띄울 이미지
   const [modalTitle, setModalTitle] = useState(""); // 모달 제목
+  const [warnings, setWarnings] = useState({}); // 경고 메시지 상태 추가
 
   const handleOptionChange = (category, value) => {
+    let warningMessage = "";
+
+    if (selectedType === "46A" && value === "5-2") {
+      warningMessage =
+        "냉장고장+싱크대연장(김치냉장고장 삭제)을 선택하였을 경우만 선택 가능한 옵션입니다";
+    }
+
+    if (
+      selectedType === "46A" &&
+      (value === "1-2" || value === "1-4" || value === "1-6")
+    ) {
+      warningMessage = "대형 드레스룸 선택시 팬트리는 삭제됩니다.";
+    }
+
+    if (selectedType === "46B" && value === "2-2") {
+      warningMessage = "해당 옵션 선택시 팬트리는 삭제됩니다.";
+    }
+
+    if (selectedType === "46B" && value === "5-2") {
+      warningMessage =
+        "냉장고장+싱크대연장(김치냉장고장 삭제)을 선택하였을 경우만 선택 가능한 옵션입니다.";
+    }
+
+    if (selectedType === "46B" && value === "14-3") {
+      warningMessage =
+        "[침실2/팬트리 통합] 드레스룸(도어+시스템선반) 옵션 선택시 선택 가능한 옵션입니다.";
+    }
+
+    if (selectedType === "55A" && (value === "1-1" || value === "1-3")) {
+      warningMessage = "대형 드레스룸 선택시 부부욕실 도어방향이 변경됩니다.";
+    }
+
+    if (selectedType === "55A" && value === "5-2") {
+      warningMessage =
+        "냉장고장+싱크대연장(김치냉장고장 삭제)을 선택하였을 경우만 선택 가능한 옵션입니다.";
+    }
+
+    if (selectedType === "55A" && value === "15-1") {
+      warningMessage = "선택시 팬트리 입구 및 크기가 변경됩니다.";
+    }
+
+    if (selectedType === "55A" && value === "11-1") {
+      warningMessage = "다기능팬은 공용욕실에만 설치됩니다.";
+    }
+
+    if (selectedType === "55A" && value === "12-1") {
+      warningMessage = "비데일체형 양변기는 부부욕실에만 설치됩니다.";
+    }
+
+    if (selectedType === "55B" && (value === "1-1" || value === "1-3")) {
+      warningMessage = "대형 드레스룸 선택시 부부욕실 도어방향이 변경됩니다.";
+    }
+
+    if (selectedType === "55B" && value === "5-2") {
+      warningMessage =
+        "냉장고장+싱크대연장(김치냉장고장 삭제)을 선택하였을 경우만 선택 가능한 옵션입니다.";
+    }
+
+    if (selectedType === "55B" && value === "11-1") {
+      warningMessage = "다기능팬은 공용욕실에만 설치됩니다.";
+    }
+
+    if (selectedType === "55B" && value === "12-1") {
+      warningMessage = "비데일체형 양변기는 부부욕실에만 설치됩니다.";
+    }
+
+    if (selectedType === "55C" && value === "5-2") {
+      warningMessage =
+        "냉장고장+싱크대연장(김치냉장고장 삭제)을 선택하였을 경우만 선택 가능한 옵션입니다.";
+    }
+
+    if (selectedType === "55C" && value === "11-1") {
+      warningMessage = "다기능팬은 공용욕실에만 설치됩니다.";
+    }
+
+    if (selectedType === "55C" && value === "12-1") {
+      warningMessage = "비데일체형 양변기는 부부욕실에만 설치됩니다.";
+    }
+    if (selectedType === "55C" && value === "15-1") {
+      warningMessage = "선택시 팬트리 입구 및 크기가 변경됩니다.";
+    }
+
+    if (selectedType === "55D" && (value === "1-1" || value === "1-3")) {
+      warningMessage = "대형 드레스룸 선택시 부부욕실 도어방향이 변경됩니다.";
+    }
+
+    if (selectedType === "55D" && value === "5-2") {
+      warningMessage =
+        "냉장고장+싱크대연장(김치냉장고장 삭제)을 선택하였을 경우만 선택 가능한 옵션입니다.";
+    }
+
+    if (selectedType === "55D" && value === "11-1") {
+      warningMessage = "다기능팬은 공용욕실에만 설치됩니다.";
+    }
+
+    if (selectedType === "55D" && value === "12-1") {
+      warningMessage = "비데일체형 양변기는 부부욕실에만 설치됩니다.";
+    }
+
+    // 최종적으로 경고 메시지를 업데이트
+    setWarnings((prev) => ({
+      ...prev,
+      [category]: warningMessage,
+    }));
     setSelectedOptions((prev) => ({
       ...prev,
       [category]: value,
@@ -84,39 +186,36 @@ const OptionPage = ({ selectedType, selectedExpandable, goBack }) => {
     setCost(totalCost);
   }, [selectedOptions]);
 
-  const handleCategoryClick = (category) => {
-    // 제외할 카테고리 리스트
-    const excludedCategories = [
-      "기타",
-      "기타2",
-      "시스템에어컨",
-      "화장실",
-      "화장실2",
-    ];
+  const handleDetailClick = () => {
+    let detailImage = ""; // 상세 이미지 변수
 
-    // 제외할 카테고리에 해당하면 모달을 열지 않음
-    if (excludedCategories.includes(category)) {
-      return;
+    switch (selectedType) {
+      case "46A":
+        detailImage = img46aDetail;
+        break;
+      case "46B":
+        detailImage = img46bDetail;
+        break;
+      case "55A":
+        detailImage = img55aDetail;
+        break;
+      case "55B":
+        detailImage = img55bDetail;
+        break;
+      case "55C":
+        detailImage = img55cDetail;
+        break;
+      case "55D":
+        detailImage = img55dDetail;
+        break;
+      default:
+        detailImage = ""; // 기본값 설정
     }
-
-    setModalImage(categoryImages[category] || ""); // 이미지 설정
-    setModalTitle(category); // 모달 제목 설정
+    setModalImage(detailImage); // 모달에 표시할 이미지 설정
+    setModalTitle("옵션 상세 확인"); // 모달 제목 설정
     setModalOpen(true); // 모달 열기
   };
 
-  // 카테고리별 이미지 설정
-  const categoryImages = {
-    침실: img46abedroom1, // 카테고리명에 맞는 이미지 설정
-    침실2: img46abedroom2,
-    냉장고장: img46arefreg,
-    식기세척기장: img46awashdish,
-    주방싱크: img46asink,
-    주방가전: img46agas,
-    "거실/현관": img46aartwall,
-    "벽 특화": img46apannel,
-    조명: img46alight,
-    기타2: img46acdoor,
-  };
   const toggleModal = () => {
     setModalOpen(!modalOpen); // 모달 상태 토글
   };
@@ -144,7 +243,7 @@ const OptionPage = ({ selectedType, selectedExpandable, goBack }) => {
     switch (selectedType) {
       case "46A":
         return (
-          <div>
+          <div style={{ marginBottom: "50px" }}>
             <img
               src={img46a_1}
               alt="46A 타입"
@@ -159,7 +258,7 @@ const OptionPage = ({ selectedType, selectedExpandable, goBack }) => {
         );
       case "46B":
         return (
-          <div>
+          <div style={{ marginBottom: "50px" }}>
             <img
               src={img46b_1}
               alt="46B 타입"
@@ -174,7 +273,7 @@ const OptionPage = ({ selectedType, selectedExpandable, goBack }) => {
         );
       case "55A":
         return (
-          <div>
+          <div style={{ marginBottom: "50px" }}>
             <img
               src={img55a_1}
               alt="55A 타입"
@@ -189,7 +288,7 @@ const OptionPage = ({ selectedType, selectedExpandable, goBack }) => {
         );
       case "55B":
         return (
-          <div>
+          <div style={{ marginBottom: "50px" }}>
             <img
               src={img55b_1}
               alt="55B 타입"
@@ -204,7 +303,7 @@ const OptionPage = ({ selectedType, selectedExpandable, goBack }) => {
         );
       case "55C":
         return (
-          <div>
+          <div style={{ marginBottom: "50px" }}>
             <img
               src={img55c_1}
               alt="55C 타입"
@@ -219,7 +318,7 @@ const OptionPage = ({ selectedType, selectedExpandable, goBack }) => {
         );
       case "55D":
         return (
-          <div>
+          <div style={{ marginBottom: "50px" }}>
             <img
               src={img55d_1}
               alt="55D 타입"
@@ -245,15 +344,17 @@ const OptionPage = ({ selectedType, selectedExpandable, goBack }) => {
           <h5 className="mb-0">공간옵션 선택</h5>
         </CardHeader>
         <CardBody>
+          <Button
+            className="m-2"
+            color="secondary"
+            size="sm"
+            onClick={handleDetailClick}
+          >
+            옵션 상세 사진 확인
+          </Button>
           {renderOption().map((category) => (
             <div key={category.category} className="mb-4">
-              <h6
-                className="mb-3 text-primary"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleCategoryClick(category.category)}
-              >
-                {category.category}
-              </h6>
+              <h6 className="mb-3 text-primary">{category.category}</h6>
               {category.items.map((item) => (
                 <Card key={item.id} className="mb-2">
                   <CardBody className="p-2">
@@ -285,6 +386,13 @@ const OptionPage = ({ selectedType, selectedExpandable, goBack }) => {
                         </Row>
                       </Label>
                     </FormGroup>
+                    {/* 경고 메시지 렌더링 */}
+                    {selectedOptions[category.category] === item.id &&
+                      warnings[category.category] && (
+                        <div className="text-danger mt-2">
+                          {warnings[category.category]}
+                        </div>
+                      )}
                   </CardBody>
                 </Card>
               ))}
